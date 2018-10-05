@@ -1,37 +1,68 @@
 import React from 'react';
-import { Text, View, Button, AppRegistry } from 'react-native';
+import { Text, View, AppRegistry, Image, TouchableOpacity, Alert } from 'react-native';
 
 //Formatações
 const Estilos = {
-  estiloTexto: {
-    fontSize: 40,
-    backgroundColor: '#08509B'
-    //height: 60,
-    //width: 60
+  principal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  estiloTexto2: {
-    fontSize: 40,
-    backgroundColor: '#2A48FA'
-    //height: 60,
-    //width: 60
+  botao: {
+    backgroundColor: '#538530',
+    paddingVertical: 10,
+    paddingHorizontal: 40,
+    marginTop: 40
   },
-  estiloView: {
-    backgroundColor: 'skyblue',
-    height: 600,
-    justifyContent: 'space-around', //alinha na vertical
-    alignItems: 'stretch', //alinha na horizontal
-    flexDirection: 'column'
+
+  textoBotao: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold'
   }
+
 };
+var frases = Array();
+frases[0] = 'Enquanto houver um coração infantil, o Vasco será imortal!';
+frases[1] = 'Não tenha pena dos mortos, tenha pena dos vivos, e principalmente do que vivem sem amor!';
+frases[2] = 'As vezes a cura está na consciência limpa!';
+frases[3] = 'Nada como um dia após o outro!';
+frases[4] = 'Mais vale um tolo espirituoso do que um espírito tolo!';
+frases[5] = 'A verdade vos salvará!';
+
+var indiceAnterior = 0;
+var primeiraExecucao = true;
+
+const gerarNovaFrase = () => {
+  
+
+  indice = gerarIndice();
+  while(indice == indiceAnterior && !primeiraExecucao) {
+    indice = gerarIndice();
+  }
+  fraseEscolhida = frases[indice];
+  indiceAnterior = indice;
+  primeiraExecucao = false;
+  Alert.alert(fraseEscolhida);
+
+}
+
+const gerarIndice = () => {
+  var indice = Math.random();
+  return indice = Math.floor(indice * 6);  
+}
 
 const App = () => {
-  const { estiloTexto, estiloTexto2, estiloView } = Estilos;
+  const { principal, botao, textoBotao } = Estilos;
   
   return (
-    <View style={ estiloView }>
-      <Text style={ estiloTexto }>A</Text>
-      <Text style={ estiloTexto2 }>B</Text>
-      <Text style={ estiloTexto2 }>C</Text>
+    <View style={principal}>
+      <Image source={require('./imgs/logo.png')} />
+      <TouchableOpacity 
+        onPress={gerarNovaFrase}
+        style={botao}>
+        <Text style={textoBotao}>Nova Frase</Text>
+      </TouchableOpacity>
     </View>
   );
 };
